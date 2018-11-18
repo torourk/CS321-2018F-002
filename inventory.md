@@ -8,13 +8,13 @@
 5. [User Commands](#user-commands)
 
 ## Items
-Items are within the game and are obtainable for pickup by a player, which are then put into the player's inventory upon doing so. These 
-items have the same properties, a name, a weight, and a value, each with unique values. These values are fixed and do not change upon 
+Items are within the game and are obtainable for pickup by a player, which are then put into the player's inventory upon doing so. These
+items have the same properties, a name, a weight, and a value, each with unique values. These values are fixed and do not change upon
 initial retrieval of the item, though will later be subject to change over the course of playing. Since the player can only carry so much,
-the item weight is there to determine if they can carry anymore than the player's max weight, though a player can only carry 10 items on 
+the item weight is there to determine if they can carry anymore than the player's max weight, though a player can only carry 10 items on
 them at a time. Items can also be sold at the shop, as well as traded to other players or even NPCs within the game.
 
-For the technical aspect, an item is a simple class aptly named Item, with corresponding fields for the name (a String), the weight 
+For the technical aspect, an item is a simple class aptly named Item, with corresponding fields for the name (a String), the weight
 (a double), and the value (also a double). It has a constructor which when this class is instatiated, a value for each field must be set.
 To go along with this are getter methods to obtain values from elsewhere, but no setters since these values will not change initially.
 For reference, below is an image of the class diagram for the Item class:
@@ -43,16 +43,16 @@ Here is an example of a successful offer:
 
 ## Item Creation
 New Items can be created or destroyed by editing a csv file. The order of the input for every item is the csv file should be in the following order: item's name, followed by the item's weight, followed by the item's value. The ItemParser class is used to interpret the csv file input, and only contains a static method called parse. The parse method accepts a string in its parameter. This string should contain the file path of the csv file. The method then reads in the csv file and extracts each item's information. The parse method creates a new item object for each item in the csv file and stores it in an ArrayList. Once each item is created and stored, the parse method returns the ArrayList of the new items created.
-  
+
 The following image depicts the proper order items should be entered in the csv file, along with their proper attributes:
 ![CSV Example](InventoryCSVPic.png "Inventory CSV")
 
 ## User Commands
 ### Dropoff
-The dropoff command removes an item from the player inventory and places it in the room inventory. To use this command simply type `dropoff <item_name>`. Once the dropoff command is entered, the dropoff function will check that the user provided an item to drop and that the item exists in the player inventory. If these conditions are met, the item will be moved from the user inventory to the room inventory. If the user doesn't specify an item to dropoff or the item provided doesn't exist in the user's inventory, a message will be displayed to notify the user.
+The dropoff command removes an item from the player inventory and places it in the room inventory. To use this command simply type `DROPOFF <item_name>`. Once the dropoff command is entered, the dropoff function will check that the user provided an item to drop and that the item exists in the player inventory. If these conditions are met, the item will be moved from the user inventory to the room inventory. If the user doesn't specify an item to dropoff or the item provided doesn't exist in the user's inventory, a message will be displayed to notify the user.
 
 ### OfferItem
-The offerItem command gives the player the ability to offer an item to another player. To use this command simply type `offerItem <item_name> <player_name>`. The offerItem function will check that the user entered an item to offer, as well as a player to offer the item to. If these conditions are satisfied it will check that the item exists in the inventory, otherwise it will display an error message to notify the player. If the item doesn't exist in the inventory an error message will also be displayed.
+The offerItem command gives the player the ability to offer an item to another player. To use this command simply type `OFFERITEM <item_name> <player_name>`. The offerItem function will check that the user entered an item to offer, as well as a player to offer the item to. If these conditions are satisfied it will check that the item exists in the inventory, otherwise it will display an error message to notify the player. If the item doesn't exist in the inventory an error message will also be displayed.
 
 Below is an example output of the dropoff function. If an item is not provided an error message is displayed. A message is also displayed if the item is been dropoff successfully.
 
@@ -60,8 +60,21 @@ The offerItem function works in a similar way but a player name is also required
 
 ![dropoff](dropoff.png "Dropoff Example")
 
-Both of these functions are called in GameClient.java and implemented in GameCore.java.
-The functions signatures are defined in the GameObjectInterface.java. The dropoff takes two strings as parameters: player name and item name. The offerItem function takes three parameters: the name of the player offering the item, the item name, and the name of the target player. 
+### SortInventory
+User inventory can be sorted by three attributes: name, value, or weight.
+To sort the inventory just type `SORTINVENTORY <attribute>`. Then type `INVENTORY` to see the items sorted.
+
+### OfferItem
+This command allows us to offer items from our inventory to other players. Simply type `OFFERITEM <playerName> <itemToOffer>`.
+
+### OfferResponse
+This command is use to reply to an offer from another player. Once a player has offered an item, reply by typing `OFFERRESPONSE <decision>`. Where the decision would be accept or refuse.
+
+### Describe
+This command describes items in the inventory. In order to use it type `DESCRIBE <item>`, where item is the item in the inventory you want to describe.
+
+### UseItem
+This command allows us to use items in our inventory. By using this command, the item is deleted from inventory and the player gets a 'title' based on the item used for 2 minutes. Just type `USEITEM <item>`, where item is the item in your inventory you want to use.     
 
 ## Authors
 __Items:__ Christopher French  
