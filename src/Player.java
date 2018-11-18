@@ -446,7 +446,6 @@ public class Player {
       }
       result += ".";
     }
-    result += ".";
     return result;
   }
   
